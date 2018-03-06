@@ -16,8 +16,10 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from views import instantAnalysis
+from analyser import analyse
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'instantAnalysis/$', instantAnalysis, name='index'),
+    url(r'analysis/$', analyse, name='index'),
 ]
