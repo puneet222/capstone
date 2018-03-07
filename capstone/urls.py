@@ -17,9 +17,11 @@ from django.conf.urls import url
 from django.contrib import admin
 from views import instantAnalysis
 from analyser import analyse
+from dataGeneration import dataGen
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'instantAnalysis/$', instantAnalysis, name='index'),
     url(r'analysis/$', analyse, name='index'),
+    url(r'dataGeneration/$', dataGen, name='index'),
 ]
