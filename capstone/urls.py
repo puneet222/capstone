@@ -16,12 +16,14 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from views import instantAnalysis
-from analyser import analyse
+from fileAnalyser import analyse
+from lineAnalysis import lineAnalysis
 from dataGeneration import dataGen
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'instantAnalysis/$', instantAnalysis, name='index'),
-    url(r'analysis/$', analyse, name='index'),
+    url(r'lineAnalysis/$', lineAnalysis, name='index'),
+    url(r'fileAnalysis/$', analyse, name='index'),
     url(r'dataGeneration/$', dataGen, name='index'),
 ]

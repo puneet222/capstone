@@ -109,23 +109,23 @@ def main(query_url):
     tweets = api.get_tweets(query =query_url , count = 500)
 
     # picking positive tweets from tweets
-    ptweets = [tweet for tweet in tweets if tweet['sentiment'] == 'positive']
+    postiveTweets = [tweet for tweet in tweets if tweet['sentiment'] == 'positive']
     # percentage of positive tweets
-    positivePercentage = 100*len(ptweets)/len(tweets) ;
-    print("Positive tweets percentage: {} %".format(100*len(ptweets)/len(tweets)))
+    positivePercentage = 100*len(postiveTweets)/len(tweets) ;
+    print("Positive tweets percentage: {} %".format(100*len(postiveTweets)/len(tweets)))
     # picking negative tweets from tweets
-    ntweets = [tweet for tweet in tweets if tweet['sentiment'] == 'negative']
+    negativeTweets = [tweet for tweet in tweets if tweet['sentiment'] == 'negative']
     # percentage of negative tweets
-    negativePercentage = 100*len(ntweets)/len(tweets) ;
-    print("Negative tweets percentage: {} %".format(100*len(ntweets)/len(tweets)))
-    # percentage of neutral tweets
-    neutralPercentage = 100*(len(tweets) - len(ntweets) - len(ptweets))/len(tweets) ;
-    print("Neutral tweets percentage: {} % ".format(100*(len(tweets) - len(ntweets) - len(ptweets))/len(tweets)))
+    negativePercentage = 100*len(negativeTweets)/len(tweets) ;
+    print("Negative tweets percentage: {} %".format(100*len(negativeTweets)/len(tweets)))
 
-    # printing first 5 positive tweets
-    # print("\n\nPositive tweets:")
-    # for tweet in ptweets[:10]:
-    #     print(tweet['text'])
+    #get neutral tweets
+    neutralTweets = [tweet for tweet in tweets if tweet['sentiment'] == 'neutral']
+    # percentage of neutral tweets
+    neutralPercentage = 100*(len(tweets) - len(negativeTweets) - len(postiveTweets))/len(tweets) ;
+    print("Neutral tweets percentage: {} % ".format(100*(len(tweets) - len(negativeTweets) - len(postiveTweets))/len(tweets)))
+
+
 
     print("Total Tweets : ")
     print(len(tweets)) ;
@@ -133,7 +133,8 @@ def main(query_url):
     return JsonResponse({"positivePercentage" : positivePercentage ,
     "negativePercentage" : negativePercentage ,
     "neutralPercentage" : neutralPercentage ,
-    "positive":ptweets,
-    "negative":ntweets})
+    "positive":postiveTweets,
+    "negative":negativeTweets,
+    "neutral":neutralTweets})
 
     # --------------------------------------------------------------------------------------------------------------------

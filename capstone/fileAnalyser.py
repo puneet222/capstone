@@ -9,7 +9,7 @@ from textblob import TextBlob
 
 def analyse(request):
     query_string=request.GET['file']
-    tweets_data_path = query_string + '.txt'
+    tweets_data_path = 'capstone/raw_data/'+query_string + '.txt'
     tweets_data = []
     tweets_file = open(tweets_data_path, "r")
     processedFile = open("processed","w+")
@@ -61,6 +61,9 @@ def analyse(request):
     # percentage of negative tweets
     negativePercentage = 100*len(ntweets)/len(tweets) ;
     print("Negative tweets percentage: {} %".format(100*len(ntweets)/len(sentimentalTweets)))
+    
+    #get neutral tweets
+    neutralTweets = [tweet for tweet in sentimentalTweets if tweet['sentiment'] == 'neutral']
     # percentage of neutral tweets
     neutralPercentage = 100*(len(tweets) - len(ntweets) - len(ptweets))/len(tweets) ;
     print("Neutral tweets percentage: {} % ".format(100*(len(sentimentalTweets) - len(ntweets) - len(ptweets))/len(sentimentalTweets)))
@@ -71,10 +74,14 @@ def analyse(request):
     #     print(tweet['text'])
 
     totalTweets = len(sentimentalTweets) ;
-    return JsonResponse({"positivePercentage" : positivePercentage ,
-    "negativePercentage" : negativePercentage ,
-    "neutralPercentage" : neutralPercentage ,
-    "total":totalTweets})
+    return JsonResponse({
+        "positivePercentage" : positivePercentage ,
+        "negativePercentage" : negativePercentage ,
+        "neutralPercentage" : neutralPercentage ,
+        "total":totalTweets,
+        "positive" : ptweets,
+        "negative": ntweets,
+        "neutral" : neutralTweets})
 
 def clean_tweet(tweet):
     '''
